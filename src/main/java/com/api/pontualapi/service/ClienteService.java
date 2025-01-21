@@ -40,7 +40,7 @@ public class ClienteService {
 
     public ClienteDTO save(ClienteDTO clienteDTO) {
         if (clienteExist(clienteDTO.getCpf())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Cliente já cadastrado na base.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Este cliente já está cadastrado no sistema.");
         }
         return clienteConverter.converterDTO(clienteRepository.save(clienteConverter.converterToEntity(clienteDTO)));
     }
@@ -48,7 +48,7 @@ public class ClienteService {
     public ClienteDTO update(ClienteDTO clienteDTO) {
         Cliente cliente = clienteRepository.findById(clienteDTO.getId()).orElseThrow(null);
         if (Objects.isNull(cliente)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente inexistente.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado.");
         }
 
         cliente.setNome(clienteDTO.getNome());

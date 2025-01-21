@@ -1,11 +1,11 @@
 -- Criação da tabela 'cliente'
 CREATE TABLE cliente (
-    id VARCHAR(36) PRIMARY KEY DEFAULT uuid_generate_v4()::TEXT,  -- UUID como texto
+    id VARCHAR(36) PRIMARY KEY DEFAULT uuid_generate_v4()::TEXT,
     nome VARCHAR(150) NOT NULL,
     cpf VARCHAR(150) NOT NULL UNIQUE,
     email VARCHAR(150),
     celular VARCHAR(150) NOT NULL,
-    CONSTRAINT unique_cpf UNIQUE (cpf)  -- Garante que o CPF seja único
+    CONSTRAINT unique_cpf UNIQUE (cpf)
 );
 
 -- Extensão para suportar geração de UUIDs
@@ -20,13 +20,25 @@ CREATE TABLE ordem_servico (
     data_orcamento DATE NOT NULL,                     -- Data do orçamento
     data_entrega DATE NOT NULL,                       -- Data de entrega
     preco DECIMAL(19,2) NOT NULL,                    -- Preço do serviço
-    status VARCHAR(255) NOT NULL,                    -- Status da ordem de serviço
-    status_pagamento VARCHAR(255) NOT NULL,          -- Status do pagamento
-    forma_pagamento VARCHAR(255) NOT NULL,           -- Forma de pagamento
+    status VARCHAR(20) NOT NULL,                    -- Status da ordem de serviço
+    status_pagamento VARCHAR(20)) NOT NULL,          -- Status do pagamento
+    forma_pagamento VARCHAR(20)) NOT NULL,           -- Forma de pagamento
     qdt_parcelas BIGINT,                             -- Quantidade de parcelas
     preco_parcela DECIMAL(19,2),                     -- Preço por parcela
     observacoes VARCHAR(255),                        -- Observações adicionais
-    CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES cliente(id),  -- Chave estrangeira para o cliente
-    CONSTRAINT unique_codigo_identificador UNIQUE (codigo_identificador)    -- Garante que o código identificador seja único
+    CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES cliente(id),
+    CONSTRAINT unique_codigo_identificador UNIQUE (codigo_identificador)
+);
+
+CREATE TABLE venda (
+    id SERIAL PRIMARY KEY,
+    tipo VARCHAR(15) NOT NULL,
+	descricao VARCHAR(255) NOT NULL,
+    data DATE NOT NULL,
+    valor_total NUMERIC(19, 2) NOT NULL,
+    forma_pagamento VARCHAR(20) NOT NULL,
+    qdt_parcelas BIGINT,
+    preco_parcela NUMERIC(19, 2),
+    observacoes VARCHAR(255)
 );
 

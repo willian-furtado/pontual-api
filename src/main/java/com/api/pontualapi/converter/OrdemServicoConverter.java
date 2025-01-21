@@ -1,9 +1,6 @@
 package com.api.pontualapi.converter;
 
 import com.api.pontualapi.dto.OrdemServicoDTO;
-import com.api.pontualapi.enums.FormaPagamentoEnum;
-import com.api.pontualapi.enums.StatusOrdemServicoEnum;
-import com.api.pontualapi.enums.StatusPagamentoEnum;
 import com.api.pontualapi.model.Cliente;
 import com.api.pontualapi.model.OrdemServico;
 import com.api.pontualapi.repository.ClienteRepository;
@@ -11,8 +8,6 @@ import com.api.pontualapi.utils.DateConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @AllArgsConstructor
 @Service
@@ -37,31 +32,15 @@ public class OrdemServicoConverter {
         servico.setDataOrcamento(DateConverter.stringToLocalDate(servicoDTO.getDataOrcamento()));
         servico.setDataEntrega(DateConverter.stringToLocalDate(servicoDTO.getDataEntrega()));
 
-        servico.setStatus(StatusOrdemServicoEnum.valueOf(servicoDTO.getStatus()));
-        servico.setFormaPagamento(setValueFormaPagamento(servicoDTO.getFormaPagamento()));
-        servico.setStatusPagamento(StatusPagamentoEnum.valueOf(servicoDTO.getStatusPagamento()));
+        servico.setStatus(servicoDTO.getStatus());
+        servico.setFormaPagamento(servicoDTO.getFormaPagamento());
+        servico.setStatusPagamento(servicoDTO.getStatusPagamento());
         servico.setPreco(servicoDTO.getValorServico());
         servico.setQdtParcelas(servicoDTO.getQtdParcelas());
         servico.setPrecoParcela(servicoDTO.getValorParcela());
         servico.setObservacoes(servicoDTO.getObservacao());
 
         return servico;
-    }
-
-    public FormaPagamentoEnum setValueFormaPagamento(String label) {
-        if (Objects.equals(label, "Dinheiro")) {
-            return FormaPagamentoEnum.DINHEIRO;
-        }
-        if (Objects.equals(label, "Débito")) {
-            return FormaPagamentoEnum.DEBITO;
-        }
-        if (Objects.equals(label, "Crédito")) {
-            return FormaPagamentoEnum.CREDITO;
-        }
-        if (Objects.equals(label, "Pix")) {
-            return FormaPagamentoEnum.PIX;
-        }
-        return null;
     }
 
     public OrdemServicoDTO converterDTO(OrdemServico ordemServico) {
@@ -74,10 +53,10 @@ public class OrdemServicoConverter {
         servicoDTO.setDataOrcamento(DateConverter.localDateToString(ordemServico.getDataOrcamento()));
         servicoDTO.setDataEntrega(DateConverter.localDateToString(ordemServico.getDataEntrega()));
 
-        servicoDTO.setStatus(ordemServico.getStatus().getLabel());
+        servicoDTO.setStatus(ordemServico.getStatus());
         servicoDTO.setValorServico(ordemServico.getPreco());
-        servicoDTO.setStatusPagamento(ordemServico.getStatusPagamento().getLabel());
-        servicoDTO.setFormaPagamento(ordemServico.getFormaPagamento().getLabel());
+        servicoDTO.setStatusPagamento(ordemServico.getStatusPagamento());
+        servicoDTO.setFormaPagamento(ordemServico.getFormaPagamento());
         servicoDTO.setQtdParcelas(ordemServico.getQdtParcelas());
         servicoDTO.setValorParcela(ordemServico.getPrecoParcela());
         servicoDTO.setObservacao(ordemServico.getObservacoes());

@@ -4,44 +4,36 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Data
 @Entity
-@Table(name = "ordem_servico")
-public class OrdemServico {
+@Data
+@Table(name = "venda")
+public class Venda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private String id;
 
+    @NotNull
+    @Size(max = 15)
     @Column(length = 15, nullable = false)
-    private String codigoIdentificador;
-
-    @ManyToOne()
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    private Cliente cliente;
+    private String tipo;
 
     @NotNull
-    @Column(nullable = false, length = 255)
-    private String servico;
+    @Size(max = 150)
+    @Column(length = 150, nullable = false)
+    private String descricao;
 
     @Column(nullable = false)
-    private LocalDate dataOrcamento;
-
-    @Column(nullable = false)
-    private LocalDate dataEntrega;
+    private LocalDateTime data;
 
     @Column(nullable = false, scale = 2, precision = 19)
-    private BigDecimal preco;
-
-    @Column(nullable = false)
-    private String status;
-
-    @Column(nullable = false)
-    private String statusPagamento;
+    private BigDecimal valorTotal;
 
     @Column(nullable = false)
     private String formaPagamento;
@@ -54,4 +46,5 @@ public class OrdemServico {
 
     @Column(length = 255)
     private String observacoes;
+
 }

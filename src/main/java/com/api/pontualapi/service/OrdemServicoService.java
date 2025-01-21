@@ -8,7 +8,6 @@ import com.api.pontualapi.repository.OrdemServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,7 +31,7 @@ public class OrdemServicoService {
 
     public OrdemServicoDTO save(OrdemServicoDTO ordemServicoDTO) {
         if (ordemServicoExiste(ordemServicoDTO.getCodigo())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ordem de Serviço: " + ordemServicoDTO.getCodigo() + " já cadastrada na base.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ordem de Serviço " + ordemServicoDTO.getCodigo() + " já existe.");
         }
         OrdemServico save = ordemServicoRepository.save(ordemServicoConverter.converterToEntity(ordemServicoDTO));
         return ordemServicoConverter.converterDTO(save);
@@ -41,7 +40,7 @@ public class OrdemServicoService {
     public OrdemServicoDTO update(OrdemServicoDTO ordemServicoDTO) {
         OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoDTO.getId()).orElseThrow(null);
         if (Objects.isNull(ordemServico)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ordem de Serviço inexistente.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ordem de Serviço não encontrada.");
         }
         return ordemServicoConverter.converterDTO(ordemServicoRepository.save(ordemServicoConverter.converterToEntity(ordemServicoDTO)));
     }
