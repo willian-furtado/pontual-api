@@ -31,13 +31,13 @@ CREATE TABLE ordem_servico (
 );
 
 CREATE TABLE venda (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR(36) PRIMARY KEY DEFAULT uuid_generate_v4()::TEXT,
     tipo VARCHAR(15) NOT NULL,
 	descricao VARCHAR(255) NOT NULL,
-    data DATE NOT NULL,
+    data TIMESTAMP NOT NULL,
     valor_total NUMERIC(19, 2) NOT NULL,
     forma_pagamento VARCHAR(20) NOT NULL,
-    qdt_parcelas BIGINT,
+    qtd_parcelas BIGINT,
     preco_parcela NUMERIC(19, 2),
     observacoes VARCHAR(255)
 );

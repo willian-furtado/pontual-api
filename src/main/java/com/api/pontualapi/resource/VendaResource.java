@@ -1,7 +1,6 @@
 package com.api.pontualapi.resource;
 
 import com.api.pontualapi.dto.FilterDTO;
-import com.api.pontualapi.dto.OrdemServicoDTO;
 import com.api.pontualapi.dto.VendaDTO;
 import com.api.pontualapi.service.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/vendas")
@@ -24,4 +25,17 @@ public class VendaResource {
         Page<VendaDTO> vendas = vendaService.findAllPage(pageable, filtro);
         return new ResponseEntity<>(vendas, HttpStatus.OK);
     }
+
+    @PostMapping()
+    public ResponseEntity<VendaDTO> save(@Valid @RequestBody VendaDTO vendaDTO) {
+        VendaDTO venda = vendaService.save(vendaDTO);
+        return new ResponseEntity<>(venda, HttpStatus.CREATED);
+    }
+
+    @PutMapping()
+    public ResponseEntity<VendaDTO> update(@Valid @RequestBody VendaDTO vendaDTO) {
+        VendaDTO venda = vendaService.update(vendaDTO);
+        return new ResponseEntity<>(venda, HttpStatus.OK);
+    }
+
 }

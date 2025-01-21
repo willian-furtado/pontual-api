@@ -11,7 +11,7 @@ public interface VendaRepository extends JpaRepository<Venda, String> {
 
     @Query("SELECT NEW com.api.pontualapi.dto.VendaDTO(" +
             "venda.id, venda.tipo, venda.descricao, venda.data, venda.valorTotal, venda.formaPagamento, " +
-            "venda.qdtParcelas, venda.precoParcela, venda.observacoes) " +
+            "venda.qtdParcelas, venda.precoParcela, venda.observacoes) " +
             "FROM Venda venda " +
             "WHERE (lower(venda.tipo) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
             "(lower(venda.descricao) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +

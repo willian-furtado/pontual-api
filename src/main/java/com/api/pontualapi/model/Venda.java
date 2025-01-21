@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -39,7 +38,7 @@ public class Venda {
     private String formaPagamento;
 
     @Column()
-    private Long qdtParcelas;
+    private Long qtdParcelas;
 
     @Column(scale = 2, precision = 19)
     private BigDecimal precoParcela;
