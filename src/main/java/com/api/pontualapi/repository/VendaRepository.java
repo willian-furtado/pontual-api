@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public interface VendaRepository extends JpaRepository<Venda, String> {
 
     @Query("SELECT NEW com.api.pontualapi.dto.VendaDTO(" +
@@ -20,5 +23,8 @@ public interface VendaRepository extends JpaRepository<Venda, String> {
             "(CAST(venda.valorTotal AS text) LIKE concat('%', :filter, '%') OR :filter IS NULL) OR " +
             "(lower(venda.formaPagamento) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL)")
     Page<VendaDTO> buscarTodos(String filter, Pageable pageable);
+
+    @Query("SELECT v FROM Venda v WHERE to_char(v.data, 'YYYY-MM-DD') = :data")
+    List<Venda> findByData(String data);
 
 }
