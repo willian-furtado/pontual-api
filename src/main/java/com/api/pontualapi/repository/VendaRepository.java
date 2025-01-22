@@ -15,6 +15,7 @@ public interface VendaRepository extends JpaRepository<Venda, String> {
             "FROM Venda venda " +
             "WHERE (lower(venda.tipo) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
             "(lower(venda.descricao) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
+            "(lower(venda.observacoes) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
             "(to_char(venda.data, 'DD/MM/YYYY') LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
             "(CAST(venda.valorTotal AS text) LIKE concat('%', :filter, '%') OR :filter IS NULL) OR " +
             "(lower(venda.formaPagamento) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL)")

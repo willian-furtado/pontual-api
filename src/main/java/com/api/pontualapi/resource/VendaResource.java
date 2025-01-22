@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/vendas")
@@ -38,4 +39,15 @@ public class VendaResource {
         return new ResponseEntity<>(venda, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") String id) {
+        vendaService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteAllById")
+    public ResponseEntity<?> deleteAll(@Valid @RequestBody List<String> id) {
+        vendaService.deleteAll(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
