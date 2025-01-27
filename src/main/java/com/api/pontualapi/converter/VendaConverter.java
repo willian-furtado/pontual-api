@@ -24,21 +24,4 @@ public class VendaConverter {
         venda.setObservacoes(vendaDTO.getObservacoes());
         return venda;
     }
-
-    public VendaDTO convertToDTO(Venda venda) {
-        VendaDTO vendaDTO = new VendaDTO();
-
-        vendaDTO.setId(venda.getId());
-        vendaDTO.setTipo(venda.getTipo());
-        vendaDTO.setDescricao(venda.getDescricao());
-        vendaDTO.setData(DateConverter.localDateToStringTime(venda.getData()));
-        vendaDTO.setValorTotal(venda.getValorTotal());
-        vendaDTO.setFormaPagamento(venda.getFormaPagamento());
-        vendaDTO.setQtdParcelas(venda.getQtdParcelas());
-        vendaDTO.setPrecoParcela(venda.getPrecoParcela());
-        vendaDTO.setObservacoes(venda.getObservacoes());
-
-        return vendaDTO;
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.api.pontualapi.dto;
 
+import com.api.pontualapi.utils.DateConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,7 +41,7 @@ public class VendaDTO {
         this.id = id;
         this.tipo = tipo;
         this.descricao = descricao;
-        this.data = data.toString();
+        this.data = DateConverter.localDateTimeToStringTime(data);
         this.valorTotal = valorTotal;
         this.formaPagamento = formaPagamento;
         this.qtdParcelas = qtdParcelas;

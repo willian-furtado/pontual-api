@@ -28,15 +28,15 @@ public class OrdemServicoResource {
     }
 
     @PostMapping()
-    public ResponseEntity<OrdemServicoDTO> save(@Valid @RequestBody OrdemServicoDTO ordemServicoDTO) {
-        OrdemServicoDTO servicoDTO = ordemServicoService.save(ordemServicoDTO);
-        return new ResponseEntity<>(servicoDTO, HttpStatus.CREATED);
+    public ResponseEntity<Void> save(@Valid @RequestBody OrdemServicoDTO ordemServicoDTO) {
+        ordemServicoService.save(ordemServicoDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping()
-    public ResponseEntity<OrdemServicoDTO> update(@Valid @RequestBody OrdemServicoDTO ordemServicoDTO) {
-        OrdemServicoDTO servicoDTO = ordemServicoService.update(ordemServicoDTO);
-        return new ResponseEntity<>(servicoDTO, HttpStatus.OK);
+    public ResponseEntity<Void> update(@Valid @RequestBody OrdemServicoDTO ordemServicoDTO) {
+        ordemServicoService.update(ordemServicoDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

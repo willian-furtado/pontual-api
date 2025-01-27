@@ -28,15 +28,15 @@ public class VendaResource {
     }
 
     @PostMapping()
-    public ResponseEntity<VendaDTO> save(@Valid @RequestBody VendaDTO vendaDTO) {
-        VendaDTO venda = vendaService.save(vendaDTO);
-        return new ResponseEntity<>(venda, HttpStatus.CREATED);
+    public ResponseEntity<Void> save(@Valid @RequestBody VendaDTO vendaDTO) {
+        vendaService.save(vendaDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping()
-    public ResponseEntity<VendaDTO> update(@Valid @RequestBody VendaDTO vendaDTO) {
-        VendaDTO venda = vendaService.update(vendaDTO);
-        return new ResponseEntity<>(venda, HttpStatus.OK);
+    public ResponseEntity<Void> update(@Valid @RequestBody VendaDTO vendaDTO) {
+        vendaService.update(vendaDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

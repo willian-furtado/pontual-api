@@ -29,20 +29,19 @@ public class OrdemServicoService {
         return ordemServicoRepository.buscarTodos(filtro.getFilter(), pageable);
     }
 
-    public OrdemServicoDTO save(OrdemServicoDTO ordemServicoDTO) {
+    public void save(OrdemServicoDTO ordemServicoDTO) {
         if (ordemServicoExiste(ordemServicoDTO.getCodigo())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Ordem de Serviço " + ordemServicoDTO.getCodigo() + " já existe.");
         }
-        OrdemServico save = ordemServicoRepository.save(ordemServicoConverter.converterToEntity(ordemServicoDTO));
-        return ordemServicoConverter.converterDTO(save);
+        ordemServicoRepository.save(ordemServicoConverter.converterToEntity(ordemServicoDTO));
     }
 
-    public OrdemServicoDTO update(OrdemServicoDTO ordemServicoDTO) {
+    public void update(OrdemServicoDTO ordemServicoDTO) {
         OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoDTO.getId()).orElseThrow(null);
         if (Objects.isNull(ordemServico)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ordem de Serviço não encontrada.");
         }
-        return ordemServicoConverter.converterDTO(ordemServicoRepository.save(ordemServicoConverter.converterToEntity(ordemServicoDTO)));
+        ordemServicoRepository.save(ordemServicoConverter.converterToEntity(ordemServicoDTO));
     }
 
     private Boolean ordemServicoExiste(String codigo) {

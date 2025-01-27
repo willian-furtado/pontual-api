@@ -28,10 +28,8 @@ public class OrdemServicoConverter {
         servico.setCodigoIdentificador(servicoDTO.getCodigo());
         servico.setServico(servicoDTO.getServico());
         servico.setCliente(cliente);
-
         servico.setDataOrcamento(DateConverter.stringToLocalDate(servicoDTO.getDataOrcamento()));
         servico.setDataEntrega(DateConverter.stringToLocalDate(servicoDTO.getDataEntrega()));
-
         servico.setStatus(servicoDTO.getStatus());
         servico.setFormaPagamento(servicoDTO.getFormaPagamento());
         servico.setStatusPagamento(servicoDTO.getStatusPagamento());
@@ -43,24 +41,4 @@ public class OrdemServicoConverter {
         return servico;
     }
 
-    public OrdemServicoDTO converterDTO(OrdemServico ordemServico) {
-        OrdemServicoDTO servicoDTO = new OrdemServicoDTO();
-        servicoDTO.setId(ordemServico.getId());
-        servicoDTO.setCodigo(ordemServico.getCodigoIdentificador());
-        servicoDTO.setServico(ordemServico.getServico());
-        servicoDTO.setCliente(clienteConverter.converterDTO(ordemServico.getCliente()));
-
-        servicoDTO.setDataOrcamento(DateConverter.localDateToString(ordemServico.getDataOrcamento()));
-        servicoDTO.setDataEntrega(DateConverter.localDateToString(ordemServico.getDataEntrega()));
-
-        servicoDTO.setStatus(ordemServico.getStatus());
-        servicoDTO.setValorServico(ordemServico.getPreco());
-        servicoDTO.setStatusPagamento(ordemServico.getStatusPagamento());
-        servicoDTO.setFormaPagamento(ordemServico.getFormaPagamento());
-        servicoDTO.setQtdParcelas(ordemServico.getQdtParcelas());
-        servicoDTO.setValorParcela(ordemServico.getPrecoParcela());
-        servicoDTO.setObservacao(ordemServico.getObservacoes());
-
-        return servicoDTO;
-    }
 }

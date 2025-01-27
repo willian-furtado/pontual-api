@@ -35,15 +35,15 @@ public class ClienteResource {
     }
 
     @PostMapping()
-    public ResponseEntity<ClienteDTO> save(@Valid @RequestBody ClienteDTO clienteDTO) {
-        ClienteDTO cliente = clienteService.save(clienteDTO);
-        return new ResponseEntity<>(cliente, HttpStatus.CREATED);
+    public ResponseEntity<Void> save(@Valid @RequestBody ClienteDTO clienteDTO) {
+        clienteService.save(clienteDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping()
-    public ResponseEntity<ClienteDTO> update(@Valid @RequestBody ClienteDTO clienteDTO) {
-        ClienteDTO cliente = clienteService.update(clienteDTO);
-        return new ResponseEntity<>(cliente, HttpStatus.OK);
+    public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO clienteDTO) {
+        clienteService.update(clienteDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

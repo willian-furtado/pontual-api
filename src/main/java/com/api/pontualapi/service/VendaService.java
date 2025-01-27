@@ -3,7 +3,6 @@ package com.api.pontualapi.service;
 import com.api.pontualapi.converter.VendaConverter;
 import com.api.pontualapi.dto.FilterDTO;
 import com.api.pontualapi.dto.VendaDTO;
-import com.api.pontualapi.model.Cliente;
 import com.api.pontualapi.model.Venda;
 import com.api.pontualapi.repository.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,16 @@ public class VendaService {
         return vendaRepository.buscarTodos(filtro.getFilter(), pageable);
     }
 
-    public VendaDTO save(VendaDTO vendaDTO) {
-        return converter.convertToDTO(vendaRepository.save(converter.convertToEntity(vendaDTO)));
+    public void save(VendaDTO vendaDTO) {
+        vendaRepository.save(converter.convertToEntity(vendaDTO));
     }
 
-    public VendaDTO update(VendaDTO vendaDTO) {
+    public void update(VendaDTO vendaDTO) {
         Venda venda = vendaRepository.findById(vendaDTO.getId()).orElseThrow(null);
         if (Objects.isNull(venda)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Venda não encontrada.");
         }
-        return converter.convertToDTO(vendaRepository.save(converter.convertToEntity(vendaDTO)));
+        vendaRepository.save(converter.convertToEntity(vendaDTO));
     }
 
     public void delete(String id) {

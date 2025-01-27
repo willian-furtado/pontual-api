@@ -2,6 +2,7 @@ package com.api.pontualapi.dto;
 
 import com.api.pontualapi.converter.ClienteConverter;
 import com.api.pontualapi.model.Cliente;
+import com.api.pontualapi.utils.DateConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,8 +55,8 @@ public class OrdemServicoDTO {
         this.codigo = codigoIdentificador;
         this.cliente = new ClienteConverter().converterDTO(cliente);
         this.servico = servico;
-        this.dataOrcamento = dataOrcamento.toString();
-        this.dataEntrega = dataEntrega.toString();
+        this.dataOrcamento = DateConverter.localDateToString(dataOrcamento);
+        this.dataEntrega = DateConverter.localDateToString(dataEntrega);
         this.valorServico = valor;
         this.status = statusServico;
         this.statusPagamento = statusPagamento;

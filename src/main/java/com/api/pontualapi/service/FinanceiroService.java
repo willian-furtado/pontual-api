@@ -48,16 +48,23 @@ public class FinanceiroService {
         return vendas.stream().collect(Collectors.groupingBy(Venda::getFormaPagamento));
     }
 
-    private List<FechamentoCalculoTipoPagamento> calcularPorTipoPagamento(Map<String, List<Venda>> vendasPorPagamento, List<OrdemServico> ordensServicoPagas) {
-        List<FechamentoCalculoTipoPagamento> tipoPagamentos = new ArrayList<>();
+    private List<FechamentoCalculoTipoPagamento> calcularPorTipoPagamento(
+            Map<String, List<Venda>> vendasPorPagamento,
+            List<OrdemServico> ordensServicoPagas) {
 
-        for (Map.Entry<String, List<Venda>> entry : vendasPorPagamento.entrySet()) {
-            String metodoPagamento = entry.getKey();
-            List<Venda> vendasMetodo = entry.getValue();
+        List<FechamentoCalculoTipoPagamento> tipoPagamentos = new ArrayList<>();
+        List<String> metodosPagamento = List.of("Dinheiro", "Débito", "Crédito", "Pix");
+
+        for (String metodoPagamento : metodosPagamento) {
+            List<Venda> vendasMetodo = vendasPorPagamento.getOrDefault(metodoPagamento, new ArrayList<>());
 
             BigDecimal totalVenda = calcularTotalPorTipo(vendasMetodo, VENDA);
             BigDecimal totalServico = calcularTotalPorTipo(vendasMetodo, SERVICO);
-            BigDecimal totalOrdemServico = calcularTotalOrdensServico(ordensServicoPagas, metodoPagamento);
+
+            BigDecimal totalOrdemServico = ordensServicoPagas.stream()
+                    .filter(o -> metodoPagamento.equalsIgnoreCase(o.getFormaPagamento()))
+                    .map(OrdemServico::getPreco)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
 
             FechamentoCalculoTipoPagamento tipoPagamento = new FechamentoCalculoTipoPagamento();
             tipoPagamento.setMetodoPagamento(metodoPagamento);
@@ -75,13 +82,6 @@ public class FinanceiroService {
         return vendas.stream()
                 .filter(v -> tipo.equalsIgnoreCase(v.getTipo()))
                 .map(Venda::getValorTotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private BigDecimal calcularTotalOrdensServico(List<OrdemServico> ordensServico, String metodoPagamento) {
-        return ordensServico.stream()
-                .filter(o -> metodoPagamento.equalsIgnoreCase(o.getFormaPagamento()))
-                .map(OrdemServico::getPreco)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
