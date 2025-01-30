@@ -19,8 +19,9 @@ CREATE TABLE ordem_servico (
     servico VARCHAR(255) NOT NULL,                   -- Descrição do serviço
     data_orcamento DATE NOT NULL,                     -- Data do orçamento
     data_entrega DATE NOT NULL,                       -- Data de entrega
-    preco DECIMAL(19,2) NOT NULL,                    -- Preço do serviço
-    status VARCHAR(20) NOT NULL,                    -- Status da ordem de serviço
+    data_Faturamento DATE,                            -- Data de Faturamento
+    preco DECIMAL(19,2) NOT NULL,                     -- Preço do serviço
+    status VARCHAR(20) NOT NULL,                     -- Status da ordem de serviço
     status_pagamento VARCHAR(20)) NOT NULL,          -- Status do pagamento
     forma_pagamento VARCHAR(20)) NOT NULL,           -- Forma de pagamento
     qdt_parcelas BIGINT,                             -- Quantidade de parcelas
@@ -41,4 +42,6 @@ CREATE TABLE venda (
     preco_parcela NUMERIC(19, 2),
     observacoes VARCHAR(255)
 );
+
+
 

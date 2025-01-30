@@ -30,6 +30,7 @@ public class OrdemServicoConverter {
         servico.setCliente(cliente);
         servico.setDataOrcamento(DateConverter.stringToLocalDate(servicoDTO.getDataOrcamento()));
         servico.setDataEntrega(DateConverter.stringToLocalDate(servicoDTO.getDataEntrega()));
+        servico.setDataFaturamento(DateConverter.stringToLocalDate(servicoDTO.getDataFaturamento()));
         servico.setStatus(servicoDTO.getStatus());
         servico.setFormaPagamento(servicoDTO.getFormaPagamento());
         servico.setStatusPagamento(servicoDTO.getStatusPagamento());

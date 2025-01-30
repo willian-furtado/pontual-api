@@ -34,6 +34,9 @@ public class OrdemServico {
     @Column(nullable = false)
     private LocalDate dataEntrega;
 
+    @Column()
+    private LocalDate dataFaturamento;
+
     @Column(nullable = false, scale = 2, precision = 19)
     private BigDecimal preco;
 

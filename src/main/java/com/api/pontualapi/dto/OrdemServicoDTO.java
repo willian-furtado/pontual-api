@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.ejb.Local;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -33,6 +34,9 @@ public class OrdemServicoDTO {
     private String dataEntrega;
 
     @NotBlank
+    private String dataFaturamento;
+
+    @NotBlank
     private BigDecimal valorServico;
 
     @NotBlank
@@ -50,13 +54,14 @@ public class OrdemServicoDTO {
 
     private String observacao;
 
-    public OrdemServicoDTO(String id, String codigoIdentificador, Cliente cliente, String servico, LocalDate dataOrcamento, LocalDate dataEntrega, BigDecimal valor, String statusServico, String statusPagamento, String formaPagamento, Long qtdParcelas, BigDecimal valorParcela, String observacao) {
+    public OrdemServicoDTO(String id, String codigoIdentificador, Cliente cliente, String servico, LocalDate dataOrcamento, LocalDate dataEntrega, LocalDate dataFaturamento, BigDecimal valor, String statusServico, String statusPagamento, String formaPagamento, Long qtdParcelas, BigDecimal valorParcela, String observacao) {
         this.id = id;
         this.codigo = codigoIdentificador;
         this.cliente = new ClienteConverter().converterDTO(cliente);
         this.servico = servico;
         this.dataOrcamento = DateConverter.localDateToString(dataOrcamento);
         this.dataEntrega = DateConverter.localDateToString(dataEntrega);
+        this.dataFaturamento = DateConverter.localDateToString(dataFaturamento);
         this.valorServico = valor;
         this.status = statusServico;
         this.statusPagamento = statusPagamento;

@@ -11,6 +11,9 @@ public class DateConverter {
 
     public static LocalDate stringToLocalDate(String dateStr) {
         try {
+            if(dateStr == null){
+                return null;
+            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse(dateStr, formatter);
         } catch (DateTimeParseException e) {
@@ -19,14 +22,26 @@ public class DateConverter {
     }
 
     public static String localDateToString(LocalDate date) {
+        if (date == null) {
+            return null;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
     }
 
-
-
     public static String localDateTimeToStringTime(LocalDateTime date) {
+        if (date == null) {
+            return null;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return date.format(formatter);
+    }
+
+    public static String localDateToStringTime(LocalDate date) {
+        if (date == null) {
+            return null;
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd");
         return date.format(formatter);
     }
 

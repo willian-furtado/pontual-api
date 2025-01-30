@@ -41,7 +41,7 @@ public class FinanceiroService {
     }
 
     private List<OrdemServico> buscarOrdensServicoPagas(String data) {
-        return ordemServicoRepository.findByStatusPagamentoAndDataEntrega(PAGO, data);
+        return ordemServicoRepository.findByStatusPagamentoAndData(PAGO, data);
     }
 
     private Map<String, List<Venda>> agruparVendasPorFormaPagamento(List<Venda> vendas) {

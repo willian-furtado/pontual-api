@@ -6,8 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface VendaRepository extends JpaRepository<Venda, String> {
@@ -27,4 +28,12 @@ public interface VendaRepository extends JpaRepository<Venda, String> {
     @Query("SELECT v FROM Venda v WHERE to_char(v.data, 'YYYY-MM-DD') = :data")
     List<Venda> findByData(String data);
 
+    @Query("SELECT COALESCE(SUM(v.valorTotal), 0) FROM Venda v WHERE to_char(v.data, 'YYYY-MM-DD') = :data")
+    BigDecimal calcularFaturamentoDoDia(String data);
+
+    @Query("SELECT COALESCE(SUM(v.valorTotal), 0) FROM Venda v WHERE to_char(v.data, 'YYYY-MM-DD') BETWEEN :inicioSemana AND :fimSemana")
+    BigDecimal calcularFaturamentoSemanal(@Param("inicioSemana") String inicioSemana, @Param("fimSemana") String fimSemana);
+
+    @Query("SELECT COALESCE(SUM(v.valorTotal), 0) FROM Venda v WHERE to_char(v.data, 'YYYY-MM-DD') BETWEEN :inicioMes AND :fimMes")
+    BigDecimal calcularFaturamentoMensal(@Param("inicioMes") String inicioMes, @Param("fimMes") String fimMes);
 }
