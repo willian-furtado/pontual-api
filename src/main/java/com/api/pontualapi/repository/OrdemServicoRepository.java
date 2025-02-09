@@ -14,6 +14,7 @@ import java.util.List;
 
 @Repository
 public interface OrdemServicoRepository extends JpaRepository<OrdemServico, String> {
+
     Boolean existsOrdemServicoByCodigoIdentificador(String codigoIdentificador);
 
     @Query("SELECT NEW com.api.pontualapi.dto.OrdemServicoDTO(" +

@@ -43,5 +43,10 @@ CREATE TABLE venda (
     observacoes VARCHAR(255)
 );
 
+CREATE TABLE fechamento_caixa (
+    id VARCHAR(36) PRIMARY KEY DEFAULT uuid_generate_v4()::TEXT,
+    data TIMESTAMP NOT NULL UNIQUE,
+    valor_total NUMERIC(19, 2) NOT NULL
+);
 
 

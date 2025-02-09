@@ -1,33 +1,45 @@
 package com.api.pontualapi.service;
 
-import com.api.pontualapi.dto.FechamentoCalculoDTO;
-import com.api.pontualapi.dto.FechamentoCalculoTipoPagamento;
-import com.api.pontualapi.dto.TotalDTO;
+import com.api.pontualapi.converter.FechamentoCaixaConverter;
+import com.api.pontualapi.dto.*;
+import com.api.pontualapi.model.FechamentoCaixa;
 import com.api.pontualapi.model.OrdemServico;
 import com.api.pontualapi.model.Venda;
+import com.api.pontualapi.repository.FechamentoCaixaRepository;
 import com.api.pontualapi.repository.OrdemServicoRepository;
 import com.api.pontualapi.repository.VendaRepository;
+import com.api.pontualapi.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class FinanceiroService {
 
-    public static final String VENDA = "VENDA";
-    public static final String SERVICO = "SERVIÇO";
-    public static final String PAGO = "PAGO";
     @Autowired
     private VendaRepository vendaRepository;
 
     @Autowired
+    private FechamentoCaixaConverter converter;
+
+    @Autowired
     private OrdemServicoRepository ordemServicoRepository;
+
+    @Autowired
+    private FechamentoCaixaRepository fechamentoCaixaRepository;
+
+    public static final String VENDA = "VENDA";
+    public static final String SERVICO = "SERVIÇO";
+    public static final String PAGO = "PAGO";
 
     public FechamentoCalculoDTO calcular(String data) {
         List<Venda> vendas = vendaRepository.findByData(data);
@@ -115,5 +127,38 @@ public class FinanceiroService {
         fechamento.setTotal(totalDTO);
 
         return fechamento;
+    }
+
+    public void save(FechamentoCaixaDTO fechamentoCaixaDTO) {
+        fechamentoCaixaRepository.save(converter.toEntity(fechamentoCaixaDTO));
+    }
+
+    public void update(FechamentoCaixaDTO fechamentoCaixaDTO) {
+        FechamentoCaixa fechamentoCaixa = fechamentoCaixaRepository.findById(fechamentoCaixaDTO.getId()).orElseThrow(null);
+        if (Objects.isNull(fechamentoCaixa)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fechamento de caixa não encontrado.");
+        }
+        fechamentoCaixaRepository.save(converter.toEntity(fechamentoCaixaDTO));
+    }
+
+    public void delete(String id) {
+        FechamentoCaixa fechamentoCaixa = fechamentoCaixaRepository.findById(id).orElseThrow(null);
+        if (Objects.isNull(fechamentoCaixa)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fechamento de caixa não encontrado.");
+        }
+        fechamentoCaixaRepository.deleteById(id);
+    }
+
+    public void deleteAll(List<String> ids) {
+        fechamentoCaixaRepository.deleteAllById(ids);
+    }
+
+    public FechamentoCaixaDTO getByData(String data) {
+        FechamentoCaixa fechamentoCaixa = fechamentoCaixaRepository.getByData(data);
+
+        if (Objects.isNull(fechamentoCaixa)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fechamento de caixa não encontrado.");
+        }
+        return converter.toDTO(fechamentoCaixa);
     }
 }
