@@ -44,4 +44,11 @@ public interface OrdemServicoRepository extends JpaRepository<OrdemServico, Stri
 
     @Query("SELECT COALESCE(SUM(o.preco), 0) FROM OrdemServico o WHERE to_char(o.dataFaturamento, 'YYYY-MM-DD') BETWEEN :inicio AND :fim")
     BigDecimal calcularFaturamentoMensal(@Param("inicio") String inicio, @Param("fim") String fim);
+
+    @Query("SELECT FUNCTION('MONTH', o.dataFaturamento) AS mes, SUM(o.preco) " +
+            "FROM OrdemServico o " +
+            "WHERE o.dataFaturamento IS NOT NULL " +
+            "GROUP BY FUNCTION('MONTH', o.dataFaturamento) " +
+            "ORDER BY mes")
+    List<Object[]> obterOrdensServicoPorMes();
 }

@@ -29,7 +29,7 @@ public class FaturamentoService {
 
         BigDecimal faturamentoTotal = faturamentoVendas.add(faturamentoServicos);
 
-        return new FaturamentoDTO(faturamentoTotal, DateConverter.localDateTimeToStringTime(LocalDateTime.now()));
+        return new FaturamentoDTO(faturamentoTotal, "Atualizado em: " + DateConverter.localDateTimeToStringTime(LocalDateTime.now()));
     }
 
     public FaturamentoDTO obterFaturamentoSemanal() {

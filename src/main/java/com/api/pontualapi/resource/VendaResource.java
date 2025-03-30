@@ -1,6 +1,8 @@
 package com.api.pontualapi.resource;
 
 import com.api.pontualapi.dto.FilterDTO;
+import com.api.pontualapi.dto.GraficoVendasDTO;
+import com.api.pontualapi.dto.UltimasVendasDTO;
 import com.api.pontualapi.dto.VendaDTO;
 import com.api.pontualapi.service.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +51,16 @@ public class VendaResource {
     public ResponseEntity<?> deleteAll(@Valid @RequestBody List<String> id) {
         vendaService.deleteAll(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/ultimasVendas")
+    public ResponseEntity<Page<UltimasVendasDTO>> ultimasVendas(Pageable pageable) {
+        Page<UltimasVendasDTO> ultimasVendasDTO = vendaService.buscarUltimasVendas(pageable);
+        return new ResponseEntity<>(ultimasVendasDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/grafico")
+    public ResponseEntity<GraficoVendasDTO> obterDadosGrafico() {
+        return ResponseEntity.ok(vendaService.obterDadosGrafico());
     }
 }

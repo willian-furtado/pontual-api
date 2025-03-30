@@ -1,5 +1,6 @@
 package com.api.pontualapi.repository;
 
+import com.api.pontualapi.dto.UltimasVendasDTO;
 import com.api.pontualapi.dto.VendaDTO;
 import com.api.pontualapi.model.Venda;
 import org.springframework.data.domain.Page;
@@ -36,4 +37,18 @@ public interface VendaRepository extends JpaRepository<Venda, String> {
 
     @Query("SELECT COALESCE(SUM(v.valorTotal), 0) FROM Venda v WHERE to_char(v.data, 'YYYY-MM-DD') BETWEEN :inicioMes AND :fimMes")
     BigDecimal calcularFaturamentoMensal(@Param("inicioMes") String inicioMes, @Param("fimMes") String fimMes);
+
+    @Query("SELECT NEW com.api.pontualapi.dto.UltimasVendasDTO(" +
+            "venda.id, venda.descricao, venda.data, venda.valorTotal) " +
+            "FROM Venda venda " +
+            "WHERE venda.tipo = 'VENDA' " +
+            "ORDER BY venda.data DESC")
+    Page<UltimasVendasDTO> buscarUltimasVendas(Pageable pageable);
+
+    @Query("SELECT FUNCTION('MONTH', v.data) AS mes, v.tipo, SUM(v.valorTotal) " +
+            "FROM Venda v " +
+            "GROUP BY FUNCTION('MONTH', v.data), v.tipo " +
+            "ORDER BY mes")
+    List<Object[]> obterVendasPorMes();
+
 }
