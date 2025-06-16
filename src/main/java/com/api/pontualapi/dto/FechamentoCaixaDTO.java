@@ -1,23 +1,33 @@
 package com.api.pontualapi.dto;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class FechamentoCaixaDTO {
 
     private String id;
 
-    @NotBlank
     private String data;
 
-    @NotBlank
-    private BigDecimal total;
+    @NotNull
+    private BigDecimal totalVenda;
+
+    @NotNull
+    private BigDecimal totalServico;
+
+    @NotNull
+    private BigDecimal totalOrdemServico;
+
+    @NotNull
+    private BigDecimal valorTotalFechamento;
+
 }

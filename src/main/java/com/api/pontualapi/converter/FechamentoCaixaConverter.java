@@ -8,6 +8,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,8 +21,11 @@ public class FechamentoCaixaConverter {
     public FechamentoCaixa toEntity(FechamentoCaixaDTO fechamentoCaixaDTO){
         FechamentoCaixa fechamentoCaixa = new FechamentoCaixa();
 
-        fechamentoCaixa.setData(DateConverter.stringToLocalDateTime(fechamentoCaixaDTO.getData()));
-        fechamentoCaixa.setValorTotal(fechamentoCaixaDTO.getTotal());
+        fechamentoCaixa.setData(LocalDate.now());
+        fechamentoCaixa.setTotalVenda(fechamentoCaixaDTO.getTotalVenda());
+        fechamentoCaixa.setTotalServico(fechamentoCaixaDTO.getTotalServico());
+        fechamentoCaixa.setTotalOrdemServico(fechamentoCaixaDTO.getTotalOrdemServico());
+        fechamentoCaixa.setValorTotal(fechamentoCaixaDTO.getValorTotalFechamento());
         return fechamentoCaixa;
     }
 
@@ -26,8 +33,11 @@ public class FechamentoCaixaConverter {
         FechamentoCaixaDTO fechamentoCaixaDTO = new FechamentoCaixaDTO();
 
         fechamentoCaixaDTO.setId(fechamentoCaixa.getId());
-        fechamentoCaixaDTO.setData(DateConverter.localDateTimeToStringTime(fechamentoCaixa.getData()));
-        fechamentoCaixa.setValorTotal(fechamentoCaixa.getValorTotal());
+        fechamentoCaixaDTO.setData(DateConverter.localDateToStringTime(fechamentoCaixa.getData()));
+        fechamentoCaixaDTO.setTotalVenda(fechamentoCaixa.getTotalVenda());
+        fechamentoCaixaDTO.setTotalServico(fechamentoCaixa.getTotalServico());
+        fechamentoCaixaDTO.setTotalOrdemServico(fechamentoCaixa.getTotalOrdemServico());
+        fechamentoCaixaDTO.setValorTotalFechamento(fechamentoCaixa.getValorTotal());
         return fechamentoCaixaDTO;
     }
 }

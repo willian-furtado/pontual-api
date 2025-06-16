@@ -2,15 +2,13 @@ package com.api.pontualapi.resource;
 
 import com.api.pontualapi.dto.FechamentoCaixaDTO;
 import com.api.pontualapi.dto.FechamentoCalculoDTO;
-import com.api.pontualapi.dto.VendaDTO;
 import com.api.pontualapi.service.FinanceiroService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,7 +25,7 @@ public class FinanceiroResource {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> save(@Valid FechamentoCaixaDTO fechamentoCaixaDTO) {
+    public ResponseEntity<Void> save(@Valid @RequestBody FechamentoCaixaDTO fechamentoCaixaDTO) {
         financeiroService.save(fechamentoCaixaDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

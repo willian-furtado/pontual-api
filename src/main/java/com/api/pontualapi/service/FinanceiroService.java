@@ -1,14 +1,16 @@
 package com.api.pontualapi.service;
 
 import com.api.pontualapi.converter.FechamentoCaixaConverter;
-import com.api.pontualapi.dto.*;
+import com.api.pontualapi.dto.FechamentoCaixaDTO;
+import com.api.pontualapi.dto.FechamentoCalculoDTO;
+import com.api.pontualapi.dto.FechamentoCalculoTipoPagamento;
+import com.api.pontualapi.dto.TotalDTO;
 import com.api.pontualapi.model.FechamentoCaixa;
 import com.api.pontualapi.model.OrdemServico;
 import com.api.pontualapi.model.Venda;
 import com.api.pontualapi.repository.FechamentoCaixaRepository;
 import com.api.pontualapi.repository.OrdemServicoRepository;
 import com.api.pontualapi.repository.VendaRepository;
-import com.api.pontualapi.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -130,7 +133,14 @@ public class FinanceiroService {
     }
 
     public void save(FechamentoCaixaDTO fechamentoCaixaDTO) {
-        fechamentoCaixaRepository.save(converter.toEntity(fechamentoCaixaDTO));
+        FechamentoCaixa fechamentoCaixa = fechamentoCaixaRepository.getByData(LocalDate.now().toString());
+        if (!Objects.isNull(fechamentoCaixa)) {
+            fechamentoCaixa.setValorTotal(fechamentoCaixaDTO.getValorTotalFechamento());
+            fechamentoCaixa.setTotalServico(fechamentoCaixaDTO.getTotalServico());
+            fechamentoCaixa.setTotalVenda(fechamentoCaixaDTO.getTotalVenda());
+            fechamentoCaixa.setTotalOrdemServico(fechamentoCaixaDTO.getTotalOrdemServico());
+        }
+        fechamentoCaixaRepository.save(fechamentoCaixa);
     }
 
     public void update(FechamentoCaixaDTO fechamentoCaixaDTO) {
