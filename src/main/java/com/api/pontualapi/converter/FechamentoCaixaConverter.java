@@ -21,7 +21,7 @@ public class FechamentoCaixaConverter {
     public FechamentoCaixa toEntity(FechamentoCaixaDTO fechamentoCaixaDTO){
         FechamentoCaixa fechamentoCaixa = new FechamentoCaixa();
 
-        fechamentoCaixa.setData(LocalDate.now());
+        fechamentoCaixa.setData(LocalDate.parse(fechamentoCaixaDTO.getData()));
         fechamentoCaixa.setTotalVenda(fechamentoCaixaDTO.getTotalVenda());
         fechamentoCaixa.setTotalServico(fechamentoCaixaDTO.getTotalServico());
         fechamentoCaixa.setTotalOrdemServico(fechamentoCaixaDTO.getTotalOrdemServico());

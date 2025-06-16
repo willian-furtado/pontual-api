@@ -24,9 +24,9 @@ public class FinanceiroResource {
         return new ResponseEntity<>(financeiroService.calcular(data), HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<Void> save(@Valid @RequestBody FechamentoCaixaDTO fechamentoCaixaDTO) {
-        financeiroService.save(fechamentoCaixaDTO);
+    @PostMapping("/{data}")
+    public ResponseEntity<Void> save(@PathVariable("data") String data, @Valid @RequestBody FechamentoCaixaDTO fechamentoCaixaDTO) {
+        financeiroService.save(fechamentoCaixaDTO, data);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

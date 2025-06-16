@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -132,15 +130,18 @@ public class FinanceiroService {
         return fechamento;
     }
 
-    public void save(FechamentoCaixaDTO fechamentoCaixaDTO) {
-        FechamentoCaixa fechamentoCaixa = fechamentoCaixaRepository.getByData(LocalDate.now().toString());
+    public void save(FechamentoCaixaDTO fechamentoCaixaDTO, String data) {
+        FechamentoCaixa fechamentoCaixa = fechamentoCaixaRepository.getByData(data);
+        fechamentoCaixaDTO.setData(data);
         if (!Objects.isNull(fechamentoCaixa)) {
             fechamentoCaixa.setValorTotal(fechamentoCaixaDTO.getValorTotalFechamento());
             fechamentoCaixa.setTotalServico(fechamentoCaixaDTO.getTotalServico());
             fechamentoCaixa.setTotalVenda(fechamentoCaixaDTO.getTotalVenda());
             fechamentoCaixa.setTotalOrdemServico(fechamentoCaixaDTO.getTotalOrdemServico());
+            fechamentoCaixaRepository.save(fechamentoCaixa);
+        } else{
+            fechamentoCaixaRepository.save(converter.toEntity(fechamentoCaixaDTO));
         }
-        fechamentoCaixaRepository.save(fechamentoCaixa);
     }
 
     public void update(FechamentoCaixaDTO fechamentoCaixaDTO) {
@@ -167,7 +168,7 @@ public class FinanceiroService {
         FechamentoCaixa fechamentoCaixa = fechamentoCaixaRepository.getByData(data);
 
         if (Objects.isNull(fechamentoCaixa)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fechamento de caixa não encontrado.");
+            return null;
         }
         return converter.toDTO(fechamentoCaixa);
     }
