@@ -26,6 +26,7 @@ public interface OrdemServicoRepository extends JpaRepository<OrdemServico, Stri
             "(lower(ordemServico.status) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
             "(to_char(ordemServico.dataOrcamento, 'DD/MM/YYYY') LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
             "(to_char(ordemServico.dataEntrega, 'DD/MM/YYYY') LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
+            "(lower(ordemServico.cliente.cpf) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL) OR " +
             "(lower(ordemServico.cliente.nome) LIKE concat('%', lower(:filter), '%') OR :filter IS NULL)")
     Page<OrdemServicoDTO> buscarTodos(String filter, Pageable pageable);
 

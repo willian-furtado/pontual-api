@@ -1,10 +1,7 @@
 package com.api.pontualapi.service;
 
 import com.api.pontualapi.converter.FechamentoCaixaConverter;
-import com.api.pontualapi.dto.FechamentoCaixaDTO;
-import com.api.pontualapi.dto.FechamentoCalculoDTO;
-import com.api.pontualapi.dto.FechamentoCalculoTipoPagamento;
-import com.api.pontualapi.dto.TotalDTO;
+import com.api.pontualapi.dto.*;
 import com.api.pontualapi.model.FechamentoCaixa;
 import com.api.pontualapi.model.OrdemServico;
 import com.api.pontualapi.model.Venda;
@@ -12,6 +9,8 @@ import com.api.pontualapi.repository.FechamentoCaixaRepository;
 import com.api.pontualapi.repository.OrdemServicoRepository;
 import com.api.pontualapi.repository.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -171,5 +170,9 @@ public class FinanceiroService {
             return null;
         }
         return converter.toDTO(fechamentoCaixa);
+    }
+
+    public Page<FechamentoCaixasDTO> findAllPage(Pageable pageable, FilterDTO filtro) {
+        return fechamentoCaixaRepository.buscarTodos(filtro.getFilter(), pageable);
     }
 }

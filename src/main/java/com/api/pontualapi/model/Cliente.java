@@ -23,7 +23,6 @@ public class Cliente {
     @Column(length = 150, nullable = false)
     private String nome;
 
-    @NotNull
     @Size(max = 150)
     @Column(unique = true, length = 150)
     private String cpf;

@@ -1,10 +1,11 @@
 package com.api.pontualapi.resource;
 
-import com.api.pontualapi.dto.FechamentoCaixaDTO;
-import com.api.pontualapi.dto.FechamentoCalculoDTO;
+import com.api.pontualapi.dto.*;
 import com.api.pontualapi.service.FinanceiroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,9 +49,15 @@ public class FinanceiroResource {
         return new ResponseEntity<>(fechamentoCaixaDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/deleteAllById")
+    @PostMapping("/delete-all")
     public ResponseEntity<?> deleteAll(@Valid @RequestBody List<String> id) {
         financeiroService.deleteAll(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/listar-todos")
+    public ResponseEntity<Page<FechamentoCaixasDTO>> listarTodos(@RequestBody FilterDTO filtro, Pageable pageable) {
+        Page<FechamentoCaixasDTO> fechamentoCaixa = financeiroService.findAllPage(pageable, filtro);
+        return new ResponseEntity<>(fechamentoCaixa, HttpStatus.OK);
     }
 }

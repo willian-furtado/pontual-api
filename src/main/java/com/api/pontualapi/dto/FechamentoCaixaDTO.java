@@ -1,5 +1,7 @@
 package com.api.pontualapi.dto;
 
+import com.api.pontualapi.utils.CurrencyConverter;
+import com.api.pontualapi.utils.DateConverter;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
